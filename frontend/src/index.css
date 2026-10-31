@@ -1,0 +1,213 @@
+:root {
+  --bg: #07070a;
+  --text: #f1eded;
+  --muted: #9a8f8f;
+  --accent: #c8102e;
+  --accent-2: #ff4d5e;
+  --glass: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(200, 16, 46, 0.35), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(120, 0, 20, 0.35), transparent 45%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle { margin: 6px 0 24px; color: var(--muted); }
+
+form { display: grid; gap: 16px; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+label { display: grid; gap: 6px; }
+label span { font-size: 0.85rem; color: var(--muted); }
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px; /* 16px stops iPhones zooming in on focus */
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.3);
+}
+
+/* hide the number-input spinner arrows */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* the red Calculate button: only the submit button, not every button */
+button[type='submit'] {
+  margin-top: 4px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+button[type='submit']:hover { box-shadow: 0 8px 24px rgba(200, 16, 46, 0.45); }
+button[type='submit']:active { transform: scale(0.98); }
+
+/* custom option groups */
+.field { display: grid; gap: 6px; }
+.field-label { font-size: 0.85rem; color: var(--muted); }
+
+.options { display: grid; gap: 8px; }
+.options.row { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+.options.stack { grid-template-columns: 1fr; }
+
+.option {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.options.row .option { text-align: center; }
+
+.option:hover { border-color: rgba(255, 255, 255, 0.28); }
+
+.option.selected {
+  background: linear-gradient(135deg, rgba(200, 16, 46, 0.4), rgba(200, 16, 46, 0.12));
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(200, 16, 46, 0.25);
+}
+
+.option-title { font-weight: 600; }
+.option-hint { font-size: 0.8rem; color: var(--muted); }
+
+.error {
+  margin-top: 16px;
+  padding: 12px 14px;
+  color: #ffc46b;
+  background: rgba(255, 170, 0, 0.1);
+  border: 1px solid rgba(255, 170, 0, 0.3);
+  border-radius: 12px;
+}
+
+.results {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  text-align: center;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  animation: rise 0.5s ease both;
+}
+
+.stat:nth-child(2) { animation-delay: 0.1s; }
+.stat:nth-child(3) { animation-delay: 0.2s; }
+
+.stat.highlight { grid-column: 1 / -1; }
+
+.stat-label { font-size: 0.8rem; color: var(--muted); }
+.stat-value { font-size: 1.8rem; font-weight: 700; overflow-wrap: anywhere; }
+.highlight .stat-value { font-size: 2.6rem; color: var(--accent-2); }
+.stat-note { font-size: 0.8rem; color: var(--muted); }
+
+/* BMI category badge */
+.badge {
+  justify-self: center;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.badge.normal {
+  color: #7ee2a8;
+  background: rgba(60, 200, 120, 0.12);
+  border-color: rgba(60, 200, 120, 0.35);
+}
+
+.badge.underweight,
+.badge.overweight {
+  color: #ffc46b;
+  background: rgba(255, 170, 0, 0.12);
+  border-color: rgba(255, 170, 0, 0.35);
+}
+
+.badge.obese {
+  color: #ff8a8a;
+  background: rgba(255, 80, 80, 0.12);
+  border-color: rgba(255, 80, 80, 0.35);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
