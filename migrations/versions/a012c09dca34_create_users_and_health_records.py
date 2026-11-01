@@ -1,8 +1,8 @@
 """create users and health_records
 
-Revision ID: c6ff283e40f7
+Revision ID: a012c09dca34
 Revises: 
-Create Date: 2026-11-01 16:35:18.077949
+Create Date: 2026-11-01 23:18:52.492605
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c6ff283e40f7'
+revision: str = 'a012c09dca34'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -43,6 +43,7 @@ def upgrade() -> None:
     sa.Column('bmi', sa.Float(), nullable=False),
     sa.Column('bmr', sa.Integer(), nullable=False),
     sa.Column('calories', sa.Integer(), nullable=False),
+    sa.Column('category', sa.String(length=20), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')

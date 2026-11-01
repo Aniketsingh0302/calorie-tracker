@@ -47,6 +47,7 @@ class HealthRecord(Base):
     bmi: Mapped[float] = mapped_column(Float)
     bmr: Mapped[int] = mapped_column(Integer)
     calories: Mapped[int] = mapped_column(Integer)
+    category:Mapped[str] = mapped_column(String(20))
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
