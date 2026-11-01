@@ -1,7 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException,Depends
 from controllers import Controllers
 from schemas import  CaloriesRequest
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from database import get_db
+
 
 
 
@@ -17,6 +22,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/db_health")
+def db_health(db: Session = Depends(get_db)):
+    try:
+        db.execute(text("SELECT 1"))
+        return {"status": "healthy"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Database connection error")
 
 @app.post("/calculate_calories")
 def get_calories(request:CaloriesRequest):
